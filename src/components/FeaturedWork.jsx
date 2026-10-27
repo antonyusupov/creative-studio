@@ -1,21 +1,17 @@
-const FeaturedWork = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Commercial",
-      category: "Brand Storytelling",
-      image:
-        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 2,
-      title: "Photography",
-      category: "Editorial Campaign",
-      image:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85",
-    },
-  ];
+import { Link } from "react-router-dom";
+import { projects } from "../data/projects";
 
+const FeaturedWork = ({ limit, category = "All" }) => {
+  const filteredProjects = projects.filter((item) => {
+    return (
+      category === "All" || item.type.toLowerCase() === category.toLowerCase()
+    );
+  });
+
+  const visibleProjects = filteredProjects.slice(
+    0,
+    limit ?? filteredProjects.length,
+  );
   return (
     <section className="bg-neutral-950 px-6 py-24">
       <div className="mx-auto max-w-7xl">
@@ -30,20 +26,38 @@ const FeaturedWork = () => {
           </p>
         </div>
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((item) => (
-            <div key={item.id} className="group">
-              <div className="aspect-[4/5] overflow-hidden">
+          {visibleProjects.map((item) => (
+            <Link
+              to={`/portfolio/${item.slug}`}
+              key={item.id}
+              className="group"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <div
+                  className="
+                  absolute inset-0
+                  flex justify-center items-center
+                  bg-black/50
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity duration-500
+                  "
+                >
+                  <span className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-0 group-hover:delay-200 text-xl font-semibold text-white">
+                    VIEW PROJECT ↗
+                  </span>
+                </div>
               </div>
               <h3 className="mt-4 text-2xl font-semibold transition-colors group-hover:text-red-500">
                 {item.title}
               </h3>
               <p>{item.category}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

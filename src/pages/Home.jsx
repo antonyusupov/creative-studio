@@ -53,7 +53,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <FeaturedWork />
+      <FeaturedWork limit={2} />
     </main>
   );
 };

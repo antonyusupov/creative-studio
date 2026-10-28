@@ -26,20 +26,25 @@ const FeaturedWork = ({ limit, category = "All" }) => {
           </p>
         </div>
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-8">
-          {visibleProjects.map((item) => (
-            <Link
-              to={`/portfolio/${item.slug}`}
-              key={item.id}
-              className="group"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div
-                  className="
+          {visibleProjects.length === 0 ? (
+            <p className="md:col-span-2 text-center text-neutral-400">
+              No projects found.
+            </p>
+          ) : (
+            visibleProjects.map((item) => (
+              <Link
+                to={`/portfolio/${item.slug}`}
+                key={item.id}
+                className="group"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div
+                    className="
                   absolute inset-0
                   flex justify-center items-center
                   bg-black/50
@@ -47,18 +52,19 @@ const FeaturedWork = ({ limit, category = "All" }) => {
                   group-hover:opacity-100
                   transition-opacity duration-500
                   "
-                >
-                  <span className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-0 group-hover:delay-200 text-xl font-semibold text-white">
-                    VIEW PROJECT ↗
-                  </span>
+                  >
+                    <span className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-0 group-hover:delay-200 text-xl font-semibold text-white">
+                      VIEW PROJECT ↗
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <h3 className="mt-4 text-2xl font-semibold transition-colors group-hover:text-red-500">
-                {item.title}
-              </h3>
-              <p>{item.category}</p>
-            </Link>
-          ))}
+                <h3 className="mt-4 text-2xl font-semibold transition-colors group-hover:text-red-500">
+                  {item.title}
+                </h3>
+                <p>{item.category}</p>
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </section>

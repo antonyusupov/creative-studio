@@ -1,8 +1,10 @@
 import FeaturedWork from "../components/FeaturedWork";
 import { useState } from "react";
+import { projects } from "../data/projects";
 
 const Portfolio = () => {
   const [category, setCategory] = useState("All");
+  const categories = ["All", ...new Set(projects.map((item) => item.type))];
   return (
     <main className="bg-neutral-950 text-white">
       <section className="min-h-[70vh] px-6 flex items-center">
@@ -23,12 +25,25 @@ const Portfolio = () => {
           </p>
         </div>
       </section>
-      <div>
-        <button onClick={() => setCategory("All")}>All</button>
-        <button onClick={() => setCategory("Film")}>Film</button>
-        <button onClick={() => setCategory("Photography")}>Photography</button>
-        <p>Selected category: {category}</p>
+      <div className=" mx-auto flex max-w-7xl flex-wrap gap-3 px-6 pb-12 justify-center items-center lg:items-start md:justify-start">
+        {categories.map((item) => (
+          <button
+            key={item}
+            onClick={() => setCategory(item)}
+            className={`rounded-full px-6 py-3 text-sm font-medium transition-colors duration-300 ${
+              category === item
+                ? "bg-red-900 text-white"
+                : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white"
+            }`}
+          >
+            {item}{" "}
+            {item === "All"
+              ? projects.length
+              : projects.filter((project) => project.type === item).length}
+          </button>
+        ))}
       </div>
+      <p>Selected category: {category}</p>
 
       <FeaturedWork category={category} />
     </main>

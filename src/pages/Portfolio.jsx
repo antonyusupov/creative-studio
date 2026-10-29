@@ -43,8 +43,6 @@ const Portfolio = () => {
           </button>
         ))}
       </div>
-      <p>Selected category: {category}</p>
-
       <FeaturedWork category={category} />
     </main>
   );
